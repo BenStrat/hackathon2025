@@ -5,3 +5,4 @@ openai==1.12.0
 tiktokapipy==0.3.0
 instagrapi==2.1.0
 pydantic==2.6.1
+gradio==4.19.0
