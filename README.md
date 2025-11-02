@@ -1,6 +1,6 @@
 # Social Video URL Parser
 
-A Python tool to parse TikTok and Instagram Reels URLs, extract captions, and detect restaurant mentions using AI.
+A full-stack web application to parse TikTok and Instagram Reels URLs, extract captions, and detect restaurant mentions using AI.
 
 ## Features
 
@@ -8,34 +8,52 @@ A Python tool to parse TikTok and Instagram Reels URLs, extract captions, and de
 - 📝 Extract video captions/descriptions
 - 🤖 AI-powered restaurant detection and suggestion
 - 🔍 Support for batch processing multiple URLs
-- 🌐 **Web-based GUI for easy interaction**
+- 🌐 **Modern Web UI built with Next.js + shadcn/ui**
+- 🚀 **FastAPI REST API backend**
 - 💻 Command-line interface (CLI)
 
-## Quick Start - Web GUI
+## Quick Start - Web Application (Recommended)
 
-The easiest way to use this tool is through the web interface:
+The easiest way to use this tool is through the modern web interface:
 
 ```bash
-# 1. Install dependencies
-pip install -r requirements.txt
-
-# 2. (Optional) Add your OpenAI API key for better results
-cp .env.example .env
-# Edit .env and add: OPENAI_API_KEY=your_key_here
-
-# 3. Launch the web interface
-python app.py
+# Launch both backend and frontend with one command
+chmod +x start.sh
+./start.sh
 ```
 
-Then open your browser to: **http://localhost:7860**
+Then open your browser to: **http://localhost:3000**
 
-### Web GUI Features
+The startup script will:
+- Start the FastAPI backend on port 8000
+- Start the Next.js frontend on port 3000
+- Install all dependencies automatically
 
-- ✨ **User-friendly interface** - No coding required
-- 📹 **Single URL parsing** - Paste and analyze one video at a time
-- 📋 **Batch processing** - Parse multiple URLs at once
-- 🎯 **Real-time results** - See captions and restaurant detection instantly
-- 📊 **Detailed analysis** - View confidence scores and reasoning
+### Manual Start
+
+**Backend (Terminal 1):**
+```bash
+cd backend
+pip install -r requirements.txt
+python3 api.py
+```
+
+**Frontend (Terminal 2):**
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### Web UI Features
+
+- ✨ **Modern, responsive design** - Built with Next.js and shadcn/ui components
+- 📹 **Single URL parsing** - Beautiful interface to analyze one video at a time
+- 📋 **Batch processing** - Process multiple URLs simultaneously
+- 🎯 **Real-time results** - Instant feedback with detailed analysis
+- 📊 **Comprehensive data** - View captions, confidence scores, and AI reasoning
+- 🎨 **Beautiful UI** - Tailwind CSS with dark mode support
+- 🔌 **REST API** - FastAPI backend with interactive docs at `/docs`
 
 ## Setup
 
@@ -52,29 +70,48 @@ cp .env.example .env
 
 3. Choose how to run:
 
-**Option A: Web GUI (Recommended)**
+**Option A: Web Application (Recommended)**
+```bash
+./start.sh
+# Frontend: http://localhost:3000
+# Backend API: http://localhost:8000
+# API Docs: http://localhost:8000/docs
+```
+
+**Option B: Gradio Interface (Simple)**
 ```bash
 python app.py
 # Opens at http://localhost:7860
 ```
 
-**Option B: Command Line**
+**Option C: Command Line**
 ```bash
 python main.py 'https://www.tiktok.com/@user/video/123'
 ```
 
 ## Usage
 
-### Web Interface (Easiest)
+### Web Application (Recommended)
 
+Start the full-stack application:
 ```bash
-python app.py
+./start.sh
 ```
 
-Then navigate to `http://localhost:7860` in your browser and:
+Then navigate to `http://localhost:3000` in your browser and:
 1. Paste a TikTok or Instagram Reels URL
-2. Click "Parse Video"
-3. View the caption and restaurant detection results
+2. Click "Parse"
+3. View comprehensive results including captions and restaurant detection
+
+**API Documentation**: Visit `http://localhost:8000/docs` for interactive API documentation
+
+### Gradio Interface (Alternative)
+
+Quick web interface without Node.js:
+```bash
+python app.py
+# Opens at http://localhost:7860
+```
 
 ### Command Line Interface
 
@@ -133,25 +170,44 @@ print(f"Confidence: {result['confidence'] * 100}%")
 
 ## Requirements
 
+### For Web Application
 - Python 3.8+
-- Dependencies listed in `requirements.txt`
+- Node.js 18+
+- Dependencies in `backend/requirements.txt` and `frontend/package.json`
 - OpenAI API key (optional, for AI-powered detection)
+
+### For CLI/Gradio Only
+- Python 3.8+
+- Dependencies in `requirements.txt`
+- OpenAI API key (optional)
 
 ## Project Structure
 
 ```
 hackathon2025/
-├── app.py                    # 🌐 Web GUI (Gradio)
-├── main.py                   # 💻 CLI tool
-├── example.py                # 📚 Usage examples
-├── test_parser.py           # ✅ Unit tests
-├── src/
-│   ├── url_parser.py        # URL parsing & validation
+├── frontend/                 # 🌐 Next.js Web Application
+│   ├── app/                 # Next.js app directory
+│   │   ├── page.tsx        # Main UI page
+│   │   ├── layout.tsx      # App layout
+│   │   └── globals.css     # Global styles
+│   ├── components/ui/       # shadcn/ui components
+│   ├── lib/                # Utility functions
+│   └── package.json        # Node.js dependencies
+├── backend/                 # 🚀 FastAPI REST API
+│   ├── api.py              # FastAPI application
+│   └── requirements.txt    # Backend dependencies
+├── src/                     # 📦 Core Python Modules
+│   ├── url_parser.py       # URL parsing & validation
 │   ├── caption_extractor.py # Caption extraction
 │   ├── restaurant_detector.py # Restaurant detection
-│   └── video_parser.py      # Main integrated parser
-├── requirements.txt         # Python dependencies
-├── .env.example            # Environment template
+│   └── video_parser.py     # Main integrated parser
+├── app.py                   # 🎨 Gradio web interface (alternative)
+├── main.py                  # 💻 CLI tool
+├── example.py               # 📚 Usage examples
+├── test_parser.py          # ✅ Unit tests
+├── start.sh                # 🚀 Startup script
+├── requirements.txt        # Python dependencies (CLI/Gradio)
+├── WEBUI_README.md         # Web UI documentation
 └── README.md               # This file
 ```
 
